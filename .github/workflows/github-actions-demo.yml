@@ -4,6 +4,13 @@ on:
     branches: [ prod ]
   pull_request:
     branches: [ prod ]
+env:
+  SSH_SERVER: "185.179.190.242"
+  SSH_PORT: "9999"
+  SSH_USER: "webspell_test"
+  SSH_PASSWORD: "kM1hT9tY2w"
+  SSH_WORKDIR: "/var/www/webspell/data/www/test2.webspell.ru/www"
+  WORKDIR: "/home/runner/work/app/app/build"
 jobs:
   Run-GitHub-Actions-Demo:
     name: Run GitHub Actions Demo
@@ -27,4 +34,7 @@ jobs:
         run: yarn lint
       - name: bash
         shell: bash
-        run: cd /home/runner/ && ls && cd work && ls && cd app && ls && cd app && ls
+        run: |
+          find $(echo $WORKDIR) -type d | xargs chmod 755
+          find $(echo $WORKDIR) -type f | xargs chmod 644
+          sshpass -p $(echo $SSH_PASSWORD) scp -r -P $(echo $SSH_PORT) $(echo $WORKDIR)/. $(echo $SSH_USER)@$(echo $SSH_SERVER):$(echo $SSH_WORKDIR)
