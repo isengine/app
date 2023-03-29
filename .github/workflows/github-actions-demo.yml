@@ -4,18 +4,19 @@ on:
     branches: [ prod ]
   pull_request:
     branches: [ prod ]
+env:
+  SSH_SERVER: "185.179.190.242"
+  SSH_PORT: "9999"
+  SSH_USER: "webspell_test"
+  SSH_PASSWORD: "kM1hT9tY2w"
+  SSH_WORKDIR: "/var/www/webspell/data/www/test2.webspell.ru/www"
+  WORKDIR: "/home/runner/work/app/app/build"
 jobs:
   init:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [ 18.x ]
-        ssh_server: "185.179.190.242"
-        ssh_port: "9999"
-        ssh_user: "webspell_test"
-        ssh_password: "kM1hT9tY2w"
-        ssh_workdir: "/var/www/webspell/data/www/test2.webspell.ru/www"
-        workdir: "/home/runner/work/app/app/build"
     steps:
       - uses: actions/checkout@v3
       - name: Staring Node.js ${{ matrix.node-version }}
@@ -32,4 +33,4 @@ jobs:
         run: yarn lint
       - name: bash
         shell: bash
-        run: sshpass -p ${{ matrix.ssh_password }} scp -r -P ${{ matrix.ssh_port }} ${{ matrix.workdir }}/. ${{ matrix.ssh_user }}@${{ matrix.ssh_server }}:${{ matrix.ssh_workdir }}
+        run: sshpass -p $(echo $SSH_PASSWORD) scp -r -P $(echo $SSH_PORT) $(echo $WORKDIR)/. $(echo $SSH_USER)@$(echo $SSH_SERVER):$(echo $SSH_WORKDIR)
