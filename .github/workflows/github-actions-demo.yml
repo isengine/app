@@ -4,6 +4,13 @@ on:
     branches: [ prod ]
   pull_request:
     branches: [ prod ]
+env:
+  SSH_SERVER: "185.179.190.242"
+  SSH_PORT: "9999"
+  SSH_USER: "webspell_test"
+  SSH_PASSWORD: "kM1hT9tY2w"
+  SSH_WORKDIR: "/var/www/webspell/data/www/test2.webspell.ru/www"
+  WORKDIR: "/home/runner/work/app/app/build"
 jobs:
   init:
     runs-on: ubuntu-latest
@@ -24,3 +31,5 @@ jobs:
         run: yarn test:unit
       - name: lint code
         run: yarn lint
+      - name: bash
+        run: sshpass -p $(echo $SSH_PASSWORD) scp -r -P $(echo $SSH_PORT) $(echo $WORKDIR)/. $(echo $SSH_USER)@$(echo $SSH_SERVER):$(echo $SSH_WORKDIR)
