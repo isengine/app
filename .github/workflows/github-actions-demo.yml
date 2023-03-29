@@ -5,7 +5,8 @@ on:
   pull_request:
     branches: [ prod ]
 jobs:
-  init:
+  Run-GitHub-Actions-Demo:
+    name: Run GitHub Actions Demo
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -16,8 +17,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - name: install yarn
-        run: npm install --global yarn
       - name: install modules
         run: yarn
       - name: build project
@@ -26,3 +25,6 @@ jobs:
         run: yarn test:unit
       - name: lint code
         run: yarn lint
+      - name: bash
+        shell: bash
+        run: cd /home/runner/ && ls && cd work && ls && cd app && ls && cd app && ls
