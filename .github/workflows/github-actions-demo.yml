@@ -12,8 +12,7 @@ env:
   SSH_WORKDIR: "/var/www/webspell/data/www/test2.webspell.ru/www"
   WORKDIR: "/home/runner/work/app/app/build"
 jobs:
-  Run-GitHub-Actions-Demo:
-    name: Run GitHub Actions Demo
+  init:
     runs-on: ubuntu-latest
     strategy:
       matrix:
