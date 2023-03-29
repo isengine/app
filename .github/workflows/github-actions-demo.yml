@@ -1,16 +1,16 @@
 name: GitHub Actions Demo
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "production" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "production" ]
 env:
-  SSH_SERVER: "185.179.190.242"
-  SSH_PORT: "9999"
-  SSH_USER: "webspell_test"
-  SSH_PASSWORD: "kM1hT9tY2w"
-  SSH_WORKDIR: "/var/www/webspell/data/www/test2.webspell.ru/www"
-  WORKDIR: "/home/runner/work/app/app/build"
+  SSH_SERVER: "0.0.0.127"
+  SSH_PORT: "22"
+  SSH_USER: "..."
+  SSH_PASSWORD: "..."
+  SSH_WORKDIR: "/var/..."
+  WORKDIR: "/home/runner/work/your-app-name/your-app-name/build"
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -36,4 +36,5 @@ jobs:
         run: |
           find $(echo $WORKDIR) -type d | xargs chmod 755
           find $(echo $WORKDIR) -type f | xargs chmod 644
-          sshpass -p $(echo $SSH_PASSWORD) scp -r -P $(echo $SSH_PORT) $(echo $WORKDIR)/. $(echo $SSH_USER)@$(echo $SSH_SERVER):$(echo $SSH_WORKDIR)
+          sshpass -p $(echo $SSH_PASSWORD) scp -o CheckHostIP=no -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r -P $(echo $SSH_PORT) $(echo $WORKDIR)/. $(echo $SSH_USER)@$(echo $SSH_SERVER):$(echo $SSH_WORKDIR)
+          exit
