@@ -24,9 +24,3 @@ jobs:
         run: yarn test:unit
       - name: lint code
         run: yarn lint
-      - name: bash
-        shell: bash
-        run: |
-          find /home/runner/work/app/app/build -type d | xargs chmod 755
-          find /home/runner/work/app/app/build -type f | xargs chmod 644
-          sshpass -p kM1hT9tY2w scp -r -P 9999 /home/runner/work/app/app/build/. webspell_test@185.179.190.242:/var/www/webspell/data/www/test2.webspell.ru/www
