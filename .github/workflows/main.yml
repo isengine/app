@@ -1,0 +1,39 @@
+name: GitHub Actions Demo
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+env:
+  SSH_SERVER: "185.179.190.242"
+  SSH_PORT: "9999"
+  SSH_USER: "webspell_test"
+  SSH_PASSWORD: "kM1hT9tY2w"
+  SSH_WORKDIR: "/var/www/webspell/data/www/test2.webspell.ru/www"
+  WORKDIR: "/home/runner/work/app/app/build"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 18.x ]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Staring Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: install modules
+        run: yarn
+      - name: build project
+        run: yarn build
+      - name: unit test
+        run: yarn test:unit
+      - name: lint code
+        run: yarn lint
+      - name: bash
+        shell: bash
+        run: |
+          find $(echo $WORKDIR) -type d | xargs chmod 755
+          find $(echo $WORKDIR) -type f | xargs chmod 644
+          sshpass -p $(echo $SSH_PASSWORD) scp -r -P $(echo $SSH_PORT) $(echo $WORKDIR)/. $(echo $SSH_USER)@$(echo $SSH_SERVER):$(echo $SSH_WORKDIR)
