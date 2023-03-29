@@ -32,7 +32,4 @@ jobs:
         run: yarn lint
       - name: bash
         shell: bash
-        run: |
-          find ${{ matrix.workdir }} -type d | xargs chmod 755
-          find ${{ matrix.workdir }} -type f | xargs chmod 644
-          sshpass -p ${{ matrix.ssh_password }} scp -r -P ${{ matrix.ssh_port }} ${{ matrix.workdir }}/. ${{ matrix.ssh_user }}@${{ matrix.ssh_server }}:${{ matrix.ssh_workdir }}
+        run: sshpass -p ${{ matrix.ssh_password }} scp -r -P ${{ matrix.ssh_port }} ${{ matrix.workdir }}/. ${{ matrix.ssh_user }}@${{ matrix.ssh_server }}:${{ matrix.ssh_workdir }}
