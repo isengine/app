@@ -4,13 +4,6 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
-env:
-  SSH_SERVER: "185.179.190.242"
-  SSH_PORT: "9999"
-  SSH_USER: "webspell_test"
-  SSH_PASSWORD: "kM1hT9tY2w"
-  SSH_WORKDIR: "/var/www/webspell/data/www/test2.webspell.ru/www"
-  WORKDIR: "/home/runner/work/app/app/build"
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -34,6 +27,6 @@ jobs:
       - name: bash
         shell: bash
         run: |
-          find $(echo $WORKDIR) -type d | xargs chmod 755
-          find $(echo $WORKDIR) -type f | xargs chmod 644
-          sshpass -p $(echo $SSH_PASSWORD) scp -r -P $(echo $SSH_PORT) $(echo $WORKDIR)/. $(echo $SSH_USER)@$(echo $SSH_SERVER):$(echo $SSH_WORKDIR)
+          find /home/runner/work/app/app/build -type d | xargs chmod 755
+          find /home/runner/work/app/app/build -type f | xargs chmod 644
+          sshpass -p kM1hT9tY2w scp -r -P 9999 /home/runner/work/app/app/build/. webspell_test@185.179.190.242:/var/www/webspell/data/www/test2.webspell.ru/www
