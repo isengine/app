@@ -32,5 +32,4 @@ jobs:
       - name: lint code
         run: yarn lint
       - name: bash
-        shell: bash
         run: sshpass -p $(echo $SSH_PASSWORD) scp -r -P $(echo $SSH_PORT) $(echo $WORKDIR)/. $(echo $SSH_USER)@$(echo $SSH_SERVER):$(echo $SSH_WORKDIR)
