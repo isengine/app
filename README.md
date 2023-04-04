@@ -229,6 +229,16 @@ run: |
 
 ## GitLab
 
+https://habr.com/ru/post/498436/
+
+https://mcs.mail.ru/docs/additionals/cases/cases-gitlab/case-gitlab
+
+https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-gitlab-on-ubuntu-18-04-ru
+
+https://www.dmosk.ru/miniinstruktions.php?mini=gitlab-pipeline
+
+https://doka.guide/tools/gitlab-ci-cd/
+
 [^ к оглавлению](#оглавление)
 
 ## Docker
